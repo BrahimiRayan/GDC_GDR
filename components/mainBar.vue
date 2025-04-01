@@ -1,57 +1,39 @@
 <template>
-    <nav class="sticky z-50 top-0 h-[64px] light:bg-[var(--pale-moon)] dark:bg-[var(--deep-dark-blue)] border-b light:border-black/10 dark:border-white/10 flex items-center text-primary justify-between w-full mx-auto py-2 px-5">
+    <nav class="sticky z-50 top-0 h-[64px] bg-[var(--deep-dark-blue)] border-b border-white/10 flex items-center text-primary justify-between w-full mx-auto py-2 px-5">
       <div class="flex gap-8">
         <UButton 
-          :class="[isDark ?'bg-transparent text-secondary font-extrabold' : 'bg-light-primary text-light-primary']" 
+          :class="['bg-transparent text-secondary hover:shadow-sm hover:-translate-x-1 shadow-green-500 font-extrabold h-8 w-8 flex items-center justify-center my-auto transition-all duration-300 ease-in-out']" 
           color="neutral" 
           variant="subtle" 
-          icon="i-ic-round-menu-open"  
+          icon="i-eva-menu-arrow-outline"
           @click="toggleDrawer"
           
         />
-        <h1>Logo</h1>
+        <div class="w-[62px] h-[62px]">
+              <img src="../assets/pics/Logo-dark.webp" class="w-full h-full" alt="">
+              <!-- <img src="../assets/pics/Logo-light.webp" class="w-full h-full" alt=""> -->
+        </div>
       </div>
      
       
       <Transition name="fade">
-        <ProductSearchBar v-if="$route.path ==='/Produits'" :isDark="isDark"/>
+        <ProductSearchBar v-if="$route.path ==='/Produits'" />
         
       </Transition>
       
       <ul class="flex items-center gap-8">
-        <li class="border-l border-r px-2.5 light:border-l-black light:border-r-black">
-          <USwitch 
-            @click="isDark = !isDark"
-            :color="'neutral'"
-            unchecked-icon="i-circum-dark"
-            checked-icon="i-circum-light"
-            :class="[isDark ? 'costumDark' : 'costumLight' ]"
-            variant ='outline'
-            
-            :ui="{
-              base: 'bg-red-500',
-              icon: isDark ? 'bg-white' : 'bg-black ml-[2px] ', 
-              thumb: !isDark ? 'bg-yellow-500' : 'bg-primary',
-              label: 'text-xs mt-1 ',
-              
-            }"
-            size="xl"
-          />
-        </li>
-
         <li>
           <!-- manipulate the show fieled to when he didn't mark a note as done to be shown -->
           <USlideover
            title="🔔 Mes notes "
+           
            icon="i-lucide-bell"
            :ui="{
                 overlay: 'bg-black/50',
-                content: 'dark:bg-[var(--deep-dark-blue)] dark:text-[var(--creamy-white)  bg-[var(--green-grace)] text-[var(--deep-dark-blue)]]', 
+                content: 'bg-[var(--deep-dark-blue)] text-[var(--creamy-white)]', 
             }"
-           >   
-          <UChip color="success" :show="true">  
-            <UButton :class="['h-7 w-7 flex  justify-center text-black bg-transparent dark:text-[var(--green-grace)] dark:bg-transparent']" icon="i-lucide-mail" color="neutral" variant="subtle" />
-          </UChip>
+           >    
+            <UButton :class="['h-8 w-8 flex hover:shadow-sm hover:-translate-y-1 shadow-green-500 justify-center bg-transparent text-[var(--green-grace)] transition-all duration-300 ease-in-out']" icon="i-lucide-mail" color="neutral" variant="subtle" />
             <template #body>
               <NontificationNoteCard />
             </template>
@@ -64,24 +46,19 @@
   </template>
   
   <script setup lang="ts">
+  // props and emits
   const props = defineProps({
     isOpen: Boolean
   });
   
   const emit = defineEmits(['update-open']);
-  
+
+  // composables
   const toggleDrawer = () => {
     emit('update-open', !props.isOpen);
   };
 
-  
-const colorMode = useColorMode()
- const isDark = ref<boolean>(true);
-
- watch(isDark, (newValue) => {
-    if(newValue) colorMode.value = 'dark';
-    else colorMode.value = 'light'; 
-  });
+  //refs
   </script>
 
   <style scoped>
@@ -95,5 +72,21 @@ const colorMode = useColorMode()
       opacity: 0;
     }
     
+    .costumDark , .costumLight{
+    /* position: relative; */
+    border-radius: 11px;
+    display: block;
+    width: 45px;
+    text-align: center;
+    height: 25px;
+    flex-shrink: 0;
+    border: 1px solid var(--creamy-white);
+    background-color: var(--green-grace);
+    transition: border-color .25s !important;
 
+}
+.costumLight{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid var(--deep-dark-blue);
+}
   </style>

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+@custom-variant dark (&:where(.dark, .dark *));
 body {
     max-width: 1440px;
     padding-inline: 5%;
@@ -32,7 +33,7 @@ html {
   }
 
   body{
-    @apply dark:bg-[var(--deep-dark-blue)] dark:text-[var(--creamy-white)] bg-[var(--pale-moon)] light:text-[var(--deep-dark-blue)]
+    @apply bg-[var(--deep-dark-blue)] text-[var(--creamy-white)] ;
 }
 .bg-primary{
     background-color: var(--deep-dark-blue);
@@ -78,20 +79,3 @@ html {
 
 }
 
-.costumDark , .costumLight{
-    /* position: relative; */
-    border-radius: 11px;
-    display: block;
-    width: 45px;
-    text-align: center;
-    height: 25px;
-    flex-shrink: 0;
-    border: 1px solid var(--creamy-white);
-    background-color: var(--green-grace);
-    transition: border-color .25s !important;
-
-}
-.costumLight{
-    background-color: rgb(255, 255, 255);
-    border: 1px solid var(--deep-dark-blue);
-}

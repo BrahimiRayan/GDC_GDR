@@ -10,16 +10,15 @@
               class="rounded-tr-2xl rounded-tl-2xl"
               :ui="{
                 overlay: 'bg-black/60',
-                header: 'dark:bg-[var(--deep-dark-blue)] light:bg-[var(--green-grace)] dark:rounded-tr-2xl dark:rounded-tl-2xl dark:text-[var(--creamy-white)]', 
-                body: 'dark:rounded-br-2xl dark:rounded-bl-2xl dark:bg-[var(--deep-dark-blue)] dark:text-[var(--creamy-white)] light:bg-[var(--green-grace)] ',
-               
+                header: 'bg-[var(--deep-dark-blue)] rounded-tr-2xl rounded-tl-2xl text-[var(--creamy-white)]', 
+                body: 'rounded-br-2xl rounded-bl-2xl bg-[var(--deep-dark-blue)] text-[var(--creamy-white)] ',
                 }">
                 
                 <div class="w-fit">
                 <UButton
                     label="Ajouter une note"
                     icon="i-lucide-plus" 
-                    class="dark:bg-[var(--green-grace)] dark:text-[var(--deep-dark-blue)] bg-[var(--pale-moon)] text-[var(--deep-dark-blue)] border-2 dark:border-[var(--green-grace)] light:hover:bg-white text-sm mb-4 m"
+                    class="bg-[var(--green-grace)] text-[var(--deep-dark-blue)] border-2 border-[var(--green-grace)] hover:bg-white text-sm mb-4 m"
                     size="sm"
                 />
             </div>
@@ -32,7 +31,7 @@
                         <UTextarea placeholder="Entrer une description" v-model="notedata.discreption" class="w-[90%]" required/>
                     </UFormField>
                     <URadioGroup v-model="notedata.type" :items="NoteTypes" color="secondary"/>
-                    <USeparator class="my-3 text-secondary opacity-25" />
+                    <USeparator class="my-3 dark:text-[var(--green-grace)] text-[var(--deep-dark-blue)] opacity-60" />
                     <UButton label="Submit" type="submit" class="mr-6 text-[var(--deep-dark-blue)] border dark:border-white"/>
                     <UButton label="Fermer" class="dark:bg-transparent bg-red-600 border border-red-600 hover:bg-red-800" @click="open = false" />
                 </form>
@@ -41,7 +40,7 @@
 
             <!-- Notes , so what i should do is to display them by newest =>oldest then !important > repelle also make a distinct UI betwen the two -->
             <!-- notifcation card -->
-            <div v-for="_ in 10" class="border-2 p-4 dark:border-[var(--green-grace)] rounded-2xl mb-6 bg-amber-50/5 light:bg-[var(--pale-moon)]/90">
+            <div v-for="_ in 10" class="border-2 p-4 dark:border-[var(--green-grace)] rounded-2xl mb-6 dark:bg-amber-50/5 bg-[var(--pale-moon)]/90">
 
                 <div class="flex justify-between items-center" >
 
@@ -59,7 +58,7 @@
                         size="sm"
                     />
                 </div>
-                <USeparator class="my-3 dark:text-secondary text-[var(--deep-dark-blue)]/30 dark:opacity-25" />
+                <USeparator class="my-3 dark:text-[var(--green-grace)] text-[var(--deep-dark-blue)]/30 dark:opacity-25" />
                 <div>
                     <h2 class="font-extrabold text-sm">Type : <span class="font-bold text-sm text-yellow-600">Important!</span></h2>
                     <h2 class="font-extrabold text-sm">Titre: <span class="text-sm font-medium">Lorem, ipsum dolor.</span></h2>

@@ -8,7 +8,7 @@
               :handle="false" 
 
               :ui="{
-                content: 'bg-[var(--green-grace)] text-[var(--deep-dark-blue)] dark:bg-[var(--deep-dark-blue)] dark:text-[var(--creamy-white)]', 
+                content: 'bg-[var(--deep-dark-blue)] text-[var(--creamy-white)]', 
             }"
         >
             
@@ -26,11 +26,11 @@
                 </div>
 
                 <nav class="flex items-start flex-col justify-around mt-10 h-[300px]">
-                    <NuxtLink class="flex items-center w-full py-3 pl-3 rounded-xl dark:hover:bg-[var(--green-grace)]/80 light:hover:bg-[var(--pale-moon)] transition-all duration-350 ease-in-out" v-for="(route, index) in Routes" :key="index" :to="route.path">
+                    <NuxtLink class="flex items-center w-full py-3 pl-3 rounded-xl hover:bg-[var(--green-grace)]/80 transition-all duration-350 ease-in-out" v-for="(route, index) in Routes" :key="index" :to="route.path">
                         <UIcon class="mr-5 size-5" :name="route.icon" />
                         {{ route.name }}
                     </NuxtLink>
-                    <NuxtLink class="flex items-center w-full py-3 pl-3 rounded-xl dark:hover:bg-[var(--green-grace)]/80 light:hover:bg-[var(--pale-moon)] transition-all duration-350 ease-in-out" v-if="isAdmin" to="/gestion">
+                    <NuxtLink class="flex items-center w-full py-3 pl-3 rounded-xl hover:bg-[var(--green-grace)]/80 transition-all duration-350 ease-in-out" v-if="isAdmin" to="/gestion">
                         <UIcon class="mr-5 size-5" name="i-material-symbols-person-outline-rounded" />
                         Gestion des comptes
                     </NuxtLink>
@@ -45,15 +45,18 @@
 </template>
     
 <script setup lang='ts'>
-
+// types
 type route = {
     name : string , 
     path : string , 
     icon : string
 }
-    const open = ref(false)
-    const isAdmin = ref(true);
-    const Routes :route [] = [
+// refs
+const open = ref(false)
+const isAdmin = ref(true);
+
+// datas
+const Routes :route [] = [
         {
             name : 'Dashboard',
             path : '/',
@@ -74,14 +77,10 @@ type route = {
             path : '/Histoire' , 
             icon : 'i-material-symbols-light-history-rounded'
         }
-    ];
+];
 
-// Handler for child's event
+// functions
     const handleDrawerToggle = (newValue:boolean) => {
      open.value = newValue;
     };
 </script>
-    
-<style>
-    
-</style>
