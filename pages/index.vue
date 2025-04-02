@@ -41,7 +41,7 @@
 </template>
   
   <script setup lang="ts">
-  import { useTheme } from '~/Composables/useTheme';
+
 // the breadcrumb item  
 import type { BreadcrumbItem } from '@nuxt/ui';
 const item: BreadcrumbItem[] = 

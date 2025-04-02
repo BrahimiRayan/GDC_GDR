@@ -14,12 +14,6 @@
               <!-- <img src="../assets/pics/Logo-light.webp" class="w-full h-full" alt=""> -->
         </div>
       </div>
-     
-      
-      <Transition name="fade">
-        <ProductSearchBar v-if="$route.path ==='/Produits'" />
-        
-      </Transition>
       
       <ul class="flex items-center gap-8">
         <li>
