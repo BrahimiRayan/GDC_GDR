@@ -1,5 +1,9 @@
 <template>
-
+    <USeparator 
+             class="text-[var(--green-grace)] w-xl my-10 mx-auto "
+             label="Informations de Stock" 
+             :ui="{ label: 'font-extrabold p-2 rounded-xl border border-transparent hover:text-[--deep-green] hover:border-[var(--deep-green)] cursor-pointer transition-all duration-300 ease-in-out' }"
+             />
     <!-- the table  -->
 
     <div class="flex flex-col flex-1 w-full mt-10 top-0 bg-[#1d1d1d]/30 ">
@@ -21,43 +25,99 @@
          :sticky="true" />
     </div>
 
-    <!-- the cards -->
-     <div ref="expaind" class="grid grid-cols-3 gap-2 h-[212px] overflow-hidden mt-10" >
-        <div v-for="product in produits" :key="product.id" class="flex items-center gap-1.5 h-50 mb-3 bg-purple-600 text-[var(--deep-dark-blue)] rounded-xl">
-            <div class="h-full w-[40%] border-r-2 border-green-500">
-                <img :src="product.img" class="h-full w-full  " alt="">
+
+    <USeparator 
+             class="text-[var(--green-grace)] w-xl my-10 mx-auto "
+             label="Mes produits" 
+             :ui="{ label: 'font-extrabold p-2 rounded-xl border border-transparent hover:text-[--deep-green] hover:border-[var(--deep-green)] cursor-pointer transition-all duration-300 ease-in-out' }"
+             />
+    <!-- search the product by name -->
+
+    <form @submit.prevent="filterProducts" class="mt-8">
+           <UInput
+            v-model="nameFilter" 
+            class="max-w-sm h-8 indent-0.5 shadow-green-600" 
+            placeholder="Chercher un produit ... " 
+            icon="i-lucide-search-check" 
+            :ui="{
+              base : 'rounded-l rounded-r-none',
+            }"
+            />
+            <UButton
+              label="Chercher"
+              class="bg-green-600 text-[var(--pale-moon)] h-8 border hover:bg-green-700 text-sm "
+              size="sm"
+              type="submit"
+              :ui="{
+                base : 'rounded-r rounded-l-none',
+              }"
+            />
+      </form>
+
+      <!-- the cards -->
+     <div ref="expandContainer" class="grid grid-cols-3 gap-2 mt-10 bg-[var(--deep-dark-blue)] transition-all duration-300 ease-in-out" 
+     :class="isExpanded ? 'h-auto' : 'h-[636px] overflow-hidden'" >
+        <!-- the card  -->
+       
+      <div v-for="product in cardProducts" :key="product.id" class=" relative hover:scale-98 transition-all duration-300 ease-in-out flex items-center gap-1.5 h-50 mb-3 bg-white/10 rounded-xl">
+            <div class="h-full w-[40%] border-r-4 border-red-500">
+                <!-- <img :src="product.img" class="h-full w-full rounded-l-2xl  " alt=""> -->
+                <NuxtImg
+                    :src="product.img"
+                    class="h-full w-full rounded-l-2xl"
+                    :alt="product.name"
+                    placeholder="/no-img.png"
+                    loading="lazy"
+                    format="webp"
+                    />
             </div>
             <div>
-                <h1 class="text-xl ">{{ product.name }}</h1>
-                <p>Acheter  : <span class="text-green-500">400400 DZD</span></p>
-                <p>vendus   : <span class="text-green-500">403400 DZD</span></p>
-                <p>Benifice : <span class="text-green-500">3000 DZD</span></p>
-
+                <h1 class="text-xl text-red-500 mb-5">{{ product.name }}</h1>
+                <p>Acheter.T  : <span class="text-green-500">400400 DZD</span></p>
+                <p>Vendus.T   : <span class="text-green-500">403400 DZD</span></p>
+                <p>Benifice.T : <span class="text-green-500">3000 DZD</span></p>
             </div>
 
+            <div class="absolute top-0 right-0">
+              <UButton
+                icon="i-lucide-pencil" 
+                class="ml-auto bg-transparent text-green-500 hover:text-green-700 hover:bg-transparent size-9 transition-colors duration-300 ease-in-out"
+                size="sm"
+                :to="`/Produits/${product.id}`"
+              />
+            </div> 
         </div>
 
-        
      </div>
-     <button @click="expaind">expaind</button>
+    
+     <div class="flex items-center justify-center">
+
+        <UButton
+            id="expandBtn"
+            :icon= "cardProducts.length>3 ? 'i-lucide-more-horizontal' : ''" 
+            class="text-white/50 hover:text-white bg-transparent hover:bg-transparent transition-colors duration-300 ease-in-out size-10"
+             size="xl"
+            @click="toggleExpand"
+        />
+        <label for="expandBtn" class="text-white/50 text-sm hover:text-white transition-colors duration-300 ease-in-out">
+        {{ isExpanded ? 'Réduire' : 'Afficher plus' }}
+      </label>
+     </div>
   </template>
 
 <script setup lang="ts">
 import { h , resolveComponent} from 'vue'
 import type { TableColumn } from '@nuxt/ui'
-let isExpainded : boolean = false
-const div = useTemplateRef<HTMLDivElement>('expaind')
-const expaind = ()=>{
-    isExpainded = !isExpainded;
-    if(isExpainded){
-        div.value?.classList.remove('h-300')
-        div.value?.classList.add('h-max')
-    }else{
-        div.value?.classList.remove('h-max')
-        div.value?.classList.add('h-300')
-    }
-}
 
+
+// expanding the card container
+const isExpanded = ref(false)
+const expandContainer = ref<HTMLDivElement | null>(null)
+
+const toggleExpand = () => {
+  isExpanded.value = !isExpanded.value
+}
+// types
 type Produit = {
   id: string
   name: string
@@ -83,6 +143,7 @@ const produits: Produit[] | [] = [
         {
         id: '2',
         name: 'Produit 2',
+        img : '/no-image.png',
         quantite: 200,
         prix_achat: 2000,
         prix_vente: 2500,
@@ -298,7 +359,24 @@ const produits: Produit[] | [] = [
   }
         
 ]  
+// the data for the cards
+const cardProducts = ref<Produit[]>(produits);
 
+// filter on the cards
+const nameFilter = ref('');
+const filterProducts = ()=> {
+  
+    if(nameFilter.value === ''){
+        cardProducts.value = produits;
+    }else{
+        cardProducts.value = produits.filter((product) => {
+            return product.name.toLowerCase().includes(nameFilter.value.toLowerCase());
+        });
+    }
+}
+
+
+// this is the table component
 const UIcon = resolveComponent('UIcon')
 // you will change inside the cell's value
 const ProduitColumns: TableColumn<Produit>[] = [
@@ -392,9 +470,6 @@ const handelDelete = (id: number) => {
 }
 
 const globalFilter = ref('')
-
-
-
 
 </script>
 
