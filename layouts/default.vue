@@ -41,7 +41,11 @@
         </template>
         </UDrawer>
                 <slot/>
-            
+        <footer>
+            <div class="w-full h-16 bg-[var(--deep-dark-blue)] flex items-center justify-center">
+                <p class="text-[var(--pale-moon)] text-sm">© 2023 All rights reserved</p>
+            </div>
+        </footer>
 </template>
     
 <script setup lang='ts'>

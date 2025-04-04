@@ -1,4 +1,7 @@
 <template>
+
+    <AddProduct />
+
     <USeparator 
              class="text-[var(--green-grace)] w-xl my-10 mx-auto "
              label="Informations de Stock" 

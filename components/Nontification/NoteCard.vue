@@ -31,16 +31,16 @@
                         <UTextarea placeholder="Entrer une description" v-model="notedata.discreption" class="w-[90%]" required/>
                     </UFormField>
                     <URadioGroup v-model="notedata.type" :items="NoteTypes" color="secondary"/>
-                    <USeparator class="my-3 dark:text-[var(--green-grace)] text-[var(--deep-dark-blue)] opacity-60" />
-                    <UButton label="Submit" type="submit" class="mr-6 text-[var(--deep-dark-blue)] border dark:border-white"/>
-                    <UButton label="Fermer" class="dark:bg-transparent bg-red-600 border border-red-600 hover:bg-red-800" @click="open = false" />
+                    <USeparator class="my-3 text-[var(--green-grace)] opacity-60" />
+                    <UButton label="Submit" type="submit" class="mr-6 text-[var(--deep-dark-blue)] borde border-white"/>
+                    <UButton label="Fermer" class="bg-transparent border border-red-600 hover:bg-red-800" @click="open = false" />
                 </form>
                 </template> 
             </UModal>
 
             <!-- Notes , so what i should do is to display them by newest =>oldest then !important > repelle also make a distinct UI betwen the two -->
             <!-- notifcation card -->
-            <div v-for="_ in 10" class="border-2 p-4 dark:border-[var(--green-grace)] rounded-2xl mb-6 dark:bg-amber-50/5 bg-[var(--pale-moon)]/90">
+            <div v-for="_ in 10" class="border-2 p-4 border-[var(--green-grace)] rounded-2xl mb-6 bg-amber-50/5">
 
                 <div class="flex justify-between items-center" >
 
@@ -48,7 +48,7 @@
                         <UAvatar size="xl" src="https://github.com/benjamincanac.png" />
                         <div class="text-sm">
                             <h1 class="font-extrabold mb-1" >Benjamin Canac <span class="text-[10px] font-bold text-secondary">(admin)</span></h1>
-                            <p class="dark:font-light font-medium text-xs ">Il y a 2 heures</p>
+                            <p class="font-light text-xs ">Il y a 2 heures</p>
                         </div>    
                     </div>
 
@@ -58,7 +58,7 @@
                         size="sm"
                     />
                 </div>
-                <USeparator class="my-3 dark:text-[var(--green-grace)] text-[var(--deep-dark-blue)]/30 dark:opacity-25" />
+                <USeparator class="my-3 text-[var(--green-grace)] opacity-25" />
                 <div>
                     <h2 class="font-extrabold text-sm">Type : <span class="font-bold text-sm text-yellow-600">Important!</span></h2>
                     <h2 class="font-extrabold text-sm">Titre: <span class="text-sm font-medium">Lorem, ipsum dolor.</span></h2>
