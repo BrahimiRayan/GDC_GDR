@@ -9,10 +9,13 @@
           @click="toggleDrawer"
           
         />
-        <div class="w-[62px] h-[62px]">
+        <NuxtLink to="/">
+          <div class="w-[62px] h-[62px]">
               <img src="../assets/pics/Logo-dark.webp" class="w-full h-full" alt="">
               <!-- <img src="../assets/pics/Logo-light.webp" class="w-full h-full" alt=""> -->
         </div>
+        </NuxtLink>
+
       </div>
       
       <ul class="flex items-center gap-8">

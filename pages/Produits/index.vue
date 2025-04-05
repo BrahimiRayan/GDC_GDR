@@ -106,12 +106,13 @@
         {{ isExpanded ? 'Réduire' : 'Afficher plus' }}
       </label>
      </div>
+
+
   </template>
 
 <script setup lang="ts">
 import { h , resolveComponent} from 'vue'
 import type { TableColumn } from '@nuxt/ui'
-
 
 // expanding the card container
 const isExpanded = ref(false)
