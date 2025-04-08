@@ -1,29 +1,24 @@
-// composables/useTheme.ts
-export const useTheme = () => {
-    const isDark = ref(false);
-  
-    // Initialize from localStorage (client-side only)
-    if (typeof window !== 'undefined') {
-      // 1. Check localStorage first
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        isDark.value = savedTheme === 'dark';
-      } 
-      // 2. Fallback to system preference ONLY if localStorage is empty
-      else {
-        isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-  
-      // 3. Apply the class to <html>
-      document.documentElement.classList.toggle('dark', isDark.value);
-    }
-  
-    // Toggle function (unchanged)
-    const toggleTheme = () => {
-      isDark.value = !isDark.value;
-      document.documentElement.classList.toggle('dark', isDark.value);
-      localStorage.setItem('theme', isDark.value ? 'dark' : 'light');
-    };
-  
-    return { isDark, toggleTheme };
-  };
+const Catecolor = (category : string)=>{
+  switch(category){
+    case 'Alimentaire':
+      return 'bg-green-400 text-white'
+    case 'Electronique':
+      return 'bg-blue-400 text-white'
+    case 'Vêtement':
+      return 'bg-red-400 text-white'
+    case 'Meuble':
+      return 'bg-yellow-400 text-white' 
+    case 'Accessoire' :
+      return 'bg-purple-400 text-white'
+    case 'Beauté' :
+      return 'bg-pink-400 text-white' 
+    case 'Sport' : 
+      return 'bg-orange-400 text-white'
+    case 'Livre' : 
+      return 'bg-teal-400 text-white'          
+    case 'Autre' :
+      return 'bg-gray-400 text-white'
+  }
+}
+
+export {Catecolor}

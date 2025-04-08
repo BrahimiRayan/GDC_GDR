@@ -2,10 +2,16 @@
   <div class="mt-8">
       <UBreadcrumb :items="item" class="mb-8 " />
       <USeparator 
-             class="text-[var(--green-grace)] w-xl my-10 mx-auto "
+             class="text-[var(--green-grace)] w-xl mt-10 mx-auto "
              label="Statistiques des ventes et achats"
              :ui="{ label: 'font-extrabold p-2 rounded-xl border border-transparent hover:text-[--deep-green] hover:border-[var(--deep-green)] cursor-pointer transition-all duration-300 ease-in-out' }"
-             />
+        />
+        <p class="mb-10 mt-3 flex items-center">
+          <UIcon name="i-game-icons-chart" class="text-[var(--green-grace)] size-5 mr-2" />
+            <span class="text-gray-400 text-sm font-bold ">
+              Inspecter et suivre vos dépenses, ventes et bénéfices pour cette année.
+            </span>
+        </p>
       <USelectMenu 
         icon = "i-game-icons-choice"
         :content="{
@@ -33,10 +39,15 @@
   </div>
   <USeparator 
              class="text-[var(--green-grace)] w-xl my-10 mx-auto "
-             label="Informations de dernier mois" 
+             label="Informations de mois courant" 
              :ui="{ label: 'font-extrabold p-2 rounded-xl border border-transparent hover:text-[--deep-green] hover:border-[var(--deep-green)] cursor-pointer transition-all duration-300 ease-in-out' }"
-             />
-
+  />
+  <p class="mt-2 flex items-center">
+    <UIcon name="i-game-icons-info" class="text-[var(--green-grace)] size-5 mr-2" />
+    <span class="text-gray-400 text-sm font-bold">
+      Vous trouverez ici les Informations générales de votre stock de produits pour ce mois.
+    </span>
+  </p>
     <StatesStatcard />
 </template>
   
