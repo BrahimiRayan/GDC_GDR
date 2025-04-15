@@ -3,8 +3,8 @@
   <div class="flex justify-between ">
     <div class="ml-4">
       <AddProduct />
-      <SelledProduct/>
-      <BoughtProduct/>
+      <SelledProduct :produits="produits"/>
+      <BoughtProduct :produits="produits"/>
     </div>
     <div class=" w-[20%] bg-[url('/state.png')] bg-no-repeat bg-contain bg-right">
     </div>
@@ -104,7 +104,7 @@ const toggleExpand = () => {
 // types
 
 // this will be the data
-const produits: Produit[] | [] = [
+const produits  = ref<Produit[] | []>( [
   {
     id: 1,
     name: 'Produit 1',
@@ -196,18 +196,18 @@ const produits: Produit[] | [] = [
     puv: 500,
     quantity: 100,
   },
-]
+])
 // the data for the cards
-const cardProducts = ref<Produit[]>(produits);
+const cardProducts = ref<Produit[]>(produits.value);
 
 // filter on the cards && reset them..
 const nameFilter = ref('');
 const filterProducts = () => {
 
   if (nameFilter.value === '') {
-    cardProducts.value = produits;
+    cardProducts.value = produits.value;
   } else {
-    cardProducts.value = produits.filter((product) => {
+    cardProducts.value = produits.value.filter((product) => {
       return product.name.toLowerCase().includes(nameFilter.value.toLowerCase());
     });
   }
@@ -215,7 +215,7 @@ const filterProducts = () => {
 
 const resetProducts = () => {
   if(nameFilter.value.trim().length >0) {
-    cardProducts.value = produits;
+    cardProducts.value = produits.value;
     nameFilter.value = '';
   } else {
     return
