@@ -21,5 +21,14 @@ type Transaction = {
     puv : number ,
 }
 
+type chartData = {
+    labels: string[],
+    datasets: {
+        label: string,
+        data: number[],
+        borderColor: string,
+        backgroundColor: string,
+    }[]
+}
 
-export type { Produit , Transaction } ;
+export type { Produit , Transaction ,chartData } ;

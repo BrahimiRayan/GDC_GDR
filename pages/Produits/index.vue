@@ -16,10 +16,25 @@
   <!-- the table  -->
 
   <div class="flex flex-col flex-1 w-full mt-10 top-0 bg-[#1d1d1d]/30 ">
+
     <div class="flex items-center justify-between px-4 py-3.5 border border-[var(--pale-moon)] rounded-t-lg">
       <p class="text-white/70 font-bold">Totale produits : <span class="text-red-500/70">{{ produits.length }}</span></p>
       <div class="flex items-center gap-3">
         <UInput v-model="globalFilter" class="max-w-sm" placeholder="Chercher un produit ... " icon="i-ci-filter" />
+        <UButton 
+        label="Exporter en PDF"
+          class="bg-red-600 text-white font-bold hover:bg-red-700 text-sm "
+          size="sm"
+          icon="i-dashicons-pdf"
+          @click="DownloadPdf"
+        />
+        <UButton 
+        label="Exporter en CSV"
+          class="bg-green-600 text-white font-bold hover:bg-green-700 text-sm "
+          size="sm"
+          icon="i-bi-filetype-csv"
+          @click="DownloadCsv"
+        />
         <UIcon name="i-ph-mouse-scroll-fill" class=" size-6" />
       </div>
     </div>
@@ -81,11 +96,16 @@
 </template>
 
 <script setup lang="ts">
+import { exportToCsv } from '~/Utils/exportCsv';
+import { exportToPdf } from '~/Utils/exportPdf';
 import { h, resolveComponent } from 'vue'
 import type { TableColumn } from '@nuxt/ui'
 import type { BreadcrumbItem } from '@nuxt/ui';
 import type { Produit } from '~/types/GeneraleT';
 import { Catecolor } from '~/Composables/useTheme';
+import { NormalDateformat } from '~/Utils/dateFormat';
+import Toasting from '~/Composables/useMyToast';
+
 const item: BreadcrumbItem[] =
   [
     {
@@ -101,7 +121,6 @@ const expandContainer = ref<HTMLDivElement | null>(null)
 const toggleExpand = () => {
   isExpanded.value = !isExpanded.value
 }
-// types
 
 // this will be the data
 const produits  = ref<Produit[] | []>( [
@@ -110,7 +129,7 @@ const produits  = ref<Produit[] | []>( [
     name: 'Produit 1',
     img: '/no-img.png',
     category: 'Alimentaire',
-    pua: 400,
+    pua: 299,
     puv: 500,
     quantity: 100,
   },
@@ -197,10 +216,60 @@ const produits  = ref<Produit[] | []>( [
     quantity: 100,
   },
 ])
+
+const DownloadCsv = ()=>{
+  if(produits.value.length === 0) {
+    Toasting('Problème', 'Aucun produit à exporter', 'error', 'E');
+    return
+  }
+  const datas : object[] = [];
+  produits.value.map((p,index)=>{
+    const data = {
+      '#': index + 1,
+      Intitulé: p.name,
+      Catégorie: p.category,
+      Prix_u_achat: `${p.pua} DZD`,
+      Prix_u_vente: `${p.puv} DZD`,
+      Benifice: `${p.puv - p.pua} DZD`,
+      Quantité: p.quantity
+    }
+    datas.push(data)
+  })
+
+  const fulldate = new Date();
+  const date =  NormalDateformat(fulldate);
+  exportToCsv(`Informatios produits ${date}.csv`, datas);
+}
+
+const DownloadPdf =()=>{
+
+  if(produits.value.length === 0) {
+    Toasting('Problème', 'Aucun produit à exporter', 'error', 'E');
+    return
+  }
+  const datas : object[] = [];
+  produits.value.map((p,index)=>{
+    const data = {
+      id: index + 1,
+      name: p.name,
+      category: p.category,
+      pua: `${p.pua} DZD`,
+      puv: `${p.puv} DZD`,
+      Benifice: `${p.puv - p.pua} DZD`,
+      quantity: p.quantity
+    }
+    datas.push(data)
+  })
+
+  const fulldate = new Date();
+  const date =  NormalDateformat(fulldate);
+  const headers = ['#', 'Intitulé', 'Catégorie', 'Prix U.Achat', 'Prix U.Vente ','Benifice','Quantité'];
+  exportToPdf(`Informatios produits ${date}.pdf`, headers, datas);
+  
+}
 // the data for the cards
 const cardProducts = ref<Produit[]>(produits.value);
 
-// filter on the cards && reset them..
 const nameFilter = ref('');
 const filterProducts = () => {
 
@@ -212,6 +281,7 @@ const filterProducts = () => {
     });
   }
 }
+
 
 const resetProducts = () => {
   if(nameFilter.value.trim().length >0) {
@@ -308,7 +378,6 @@ const ProduitColumns: TableColumn<Produit>[] = [
     cell: ({ row }) => {
       const category: string = row.getValue('category')
       const color = Catecolor(category)
-      console.log(color);
       return h(UBadge, { label: category, class: color },)
     }
   },
@@ -321,10 +390,13 @@ const ProduitColumns: TableColumn<Produit>[] = [
     }
   }
 ]
+
+// TODO:Server side functionalities
+
 // here is the delete function , do modify this after working on the back...
+
 const handelDelete = (id: number) => {
   console.log('delete', id);
-
 }
 
 const globalFilter = ref('')

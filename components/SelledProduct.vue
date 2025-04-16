@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import Toasting from '~/Composables/useMyToast';
 
-// props
+// TODO: FIX props by adding ts
 const props = defineProps({
   produits: {
     type: Array,
